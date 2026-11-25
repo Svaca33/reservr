@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/Reservr.Domain.Tests/Reservr.Domain.Tests.csproj" />
+    <Project Path="tests/Reservr.IntegrationTests/Reservr.IntegrationTests.csproj" />
+  </Folder>
+  <Project Path="Reservr.Api/Reservr.Api.csproj" />
+  <Project Path="Reservr.AppHost/Reservr.AppHost.csproj" />
+  <Project Path="Reservr.Domain/Reservr.Domain.csproj" />
+  <Project Path="Reservr.ServiceDefaults/Reservr.ServiceDefaults.csproj" />
+</Solution>
