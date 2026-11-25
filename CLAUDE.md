@@ -1,7 +1,5 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 Reservr is a booking system for sports venues, starting with bowling. It is currently a walking skeleton (.NET 10, Aspire 17, PostgreSQL, Minimal API); the brief and the reasons behind each decision are in [docs/skeleton.md](docs/skeleton.md).
 
 ## Commands
