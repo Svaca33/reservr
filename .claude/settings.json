@@ -1,0 +1,29 @@
+{
+    "hooks": {
+        "PreToolUse": [
+            {
+                "matcher": "Bash",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "if": "Bash(git commit *)",
+                        "command": "dotnet test tests/Reservr.Domain.Tests --nologo -v q 1>&2 || exit 2"
+                    }
+                ]
+            }
+        ],
+        "Stop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "dotnet build --nologo -v q 1>&2 || exit 2"
+                    }
+                ]
+            }
+        ]
+    },
+    "permissions": {
+        "deny": ["Read(./.env)", "Read(./.env.*)"]
+    }
+}
