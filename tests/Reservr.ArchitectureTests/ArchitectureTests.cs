@@ -1,10 +1,10 @@
 using ArchUnitNET.Domain;
-using ArchUnitNET.Fluent;
 using ArchUnitNET.Loader;
 using ArchUnitNET.xUnit;
 using Reservr.Api.Infrastructure;
 using Reservr.Domain;
 using static ArchUnitNET.Fluent.ArchRuleDefinition;
+using static ArchUnitNET.Fluent.Slices.SliceRuleDefinition;
 
 namespace Reservr.ArchitectureTests;
 
@@ -43,23 +43,12 @@ public class ArchitectureTests
     [Fact]
     public void Use_case_does_not_depend_on_another_use_case()
     {
-        var useCases = Architecture.Types
-            .Select(t => t.Namespace.FullName.Split('.'))
-            .Where(segments => segments.Length >= 5 && string.Join('.', segments[..3]) == FeaturesNamespace)
-            .Select(segments => string.Join('.', segments[..5]))
-            .Distinct()
-            .ToList();
-
-        Assert.NotEmpty(useCases);
-
-        var rules = useCases.Select(useCase =>
-            Types().That().ResideInNamespaceOrBelow(useCase)
-                .Should().NotDependOnAny(Types().That()
-                    .ResideInNamespaceOrBelow(FeaturesNamespace)
-                    .And().DoNotResideInNamespaceOrBelow(useCase))
-                .Because($"{useCase} is a slice and slices never reference each other"));
-
-        rules.Aggregate<IArchRule>((all, rule) => all.And(rule)).Check(Architecture);
+        // (*).(*) captures area and use case, so a slice is e.g. "Lanes - ListLanes";
+        // the trailing .. keeps sub-namespaces of a use case inside its slice.
+        // Types directly in an area namespace do not match and are ignored here; A3 forbids them.
+        Slices().Matching("Reservr.Api.Features.(*).(*)..")
+            .Should().NotDependOnEachOther()
+            .Check(Architecture);
     }
 
     [Fact]
