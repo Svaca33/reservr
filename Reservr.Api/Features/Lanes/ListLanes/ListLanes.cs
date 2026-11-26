@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Reservr.Api.Infrastructure;
 
-namespace Reservr.Api.Features.Lanes;
+namespace Reservr.Api.Features.Lanes.ListLanes;
 
 /// <summary>GET /lanes: all lanes, ordered by number.</summary>
 public sealed class ListLanes : IEndpoint
