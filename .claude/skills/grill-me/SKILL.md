@@ -62,10 +62,12 @@ Close every round with the rules and examples added or changed in it, then the f
 
 ## Interface
 
-Every outcome in the example map must be observable from outside, at the highest public **interface** where the behaviour can be checked (for Reservr, the HTTP API). Once an outcome is settled, put a frontier question on how the caller observes it, with your proposed **contract** as the recommended answer: the operation (HTTP method and route), its inputs, and for each kind of outcome the response the caller gets (status code and the fields that matter). Outcomes that share a response share one question.
+Every example must be checkable from outside, at the highest public **interface** where the behaviour can be checked (for Reservr, the HTTP API), at both ends: its situation is **set up** and its outcome is **observed** through that interface.
 
-When any outcome depends on **now**, ask how a test through the public interface sets the server's clock, with your proposed answer.
+Once an outcome is settled, put a frontier question on how the caller observes it, with your proposed **contract** as the recommended answer: the operation (HTTP method and route), its inputs, and for each kind of outcome the response the caller gets (status code and the fields that matter). Outcomes that share a response share one question.
+
+For every situation, name the public operations that set it up. When a piece of the situation has no such operation (a record nothing in the interface creates, the server's clock behind **now**), put a frontier question on how a test sets it up, with your proposed answer: an operation from this or another spec, configuration the test passes at startup, or a change to the example.
 
 ## Done
 
-The session is done when the frontier is empty: every branch of the design tree visited, every rule carrying its typical, boundary and rejected examples, every outcome mapped to a response in the contract, every unknown recorded as an open question, nothing silently assumed. Then present the whole picture in one message: the decisions, the full example map, the contract, and the open questions. Ask the user to confirm you have reached a shared understanding; once they do, point them to `/to-spec`.
+The session is done when the frontier is empty: every branch of the design tree visited, every rule carrying its typical, boundary and rejected examples, every situation set up through the interface, every outcome mapped to a response in the contract, every unknown recorded as an open question, nothing silently assumed. Then present the whole picture in one message: the decisions, the full example map, the contract, and the open questions. Ask the user to confirm you have reached a shared understanding; once they do, point them to `/to-spec`.
