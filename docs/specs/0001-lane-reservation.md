@@ -25,7 +25,7 @@ Unless an example says otherwise:
 - Now is 2026-12-05 17:30 Europe/Prague (UTC+01:00).
 - All times are Europe/Prague local times on 2026-12-05.
 - Each example starts with the staff member creating the lanes it names through `POST /lanes`, and the requests use the `id`s that call returns.
-- Lane numbers in the examples ("lane 1", "lane 2") are only labels within that example. A test may create its lanes with any free number.
+- Lane numbers in the examples ("lane 1", "lane 2") are only labels within that example. A test creates its lanes with unique numbers from the shared test helper described in spec 0002.
 - Any reservation that already exists in a situation is created beforehand through `POST /reservations`.
 - "Afterwards" in an expected outcome means a follow-up `POST /reservations` that shows a refused request held nothing.
 - The Guards column names the faulty behaviour the example catches.
@@ -199,7 +199,7 @@ There is no per-request time override, because it would be a security hole in pr
 - No overlap is guaranteed by a database exclusion constraint over lane and time range, which mirrors the domain invariant like the existing check constraints. Only the database can prevent double booking under concurrent requests.
 - The concurrency rule is checked with 10 parallel identical requests that expect exactly one 201. A correct system always passes, and a racy one fails with high probability.
 - Lanes for the examples are created through `POST /lanes` (spec 0002), not raw SQL. Acceptance tests use only the public HTTP API, and fresh lanes per test keep tests on the shared database independent, since nothing can be deleted through the API.
-- Lane numbers in the examples are labels, and tests work with the returned ids. Tests must not depend on whether spec 0002 makes lane numbers unique.
+- Lane numbers in the examples are labels, and tests work with the returned ids. Spec 0002 makes lane numbers unique, so tests take their numbers from its shared test helper.
 - "Nothing stored" is shown by a follow-up booking of the valid part that succeeds. Where a refused request has no valid part, no claim about storage is made. Internal state is not observable through the API.
 - The API gets a time provider that can be fixed through `Clock:FixedNow`, which is honoured only outside Production; in Production its presence stops startup. Integration tests run the API out of process and can only control it through configuration, and a fixed clock must never reach production silently.
 - Every Guards cell is one sentence naming the faulty behaviour the example catches. This gives the column one consistent style.
