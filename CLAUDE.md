@@ -2,6 +2,13 @@
 
 Reservr is a booking system for sports venues, starting with bowling. It is currently a walking skeleton (.NET 10, Aspire 17, PostgreSQL, Minimal API); the brief and the reasons behind each decision are in [docs/skeleton.md](docs/skeleton.md).
 
+## Product
+
+Reservr is a back-office tool for the staff of a sports centre (bowling first).
+Roles: **staff member** (uses Reservr) and **customer** (the reservation is for them).
+Never say "user". Later, customers get their own simple web to manage their
+reservation; staff and customers will log in separately to a shared backend.
+
 ## Commands
 
 ```sh
@@ -31,3 +38,7 @@ Vertical Slice Architecture. One ticket should touch one slice, so parallel agen
 ## Integration tests
 
 `tests/Reservr.IntegrationTests` starts the whole AppHost once per test collection (`ReservrAppFixture`) and calls the API over HTTP. All tests share one database, so each test that writes data seeds it with raw SQL through `fixture.DatabaseConnectionString` (snake_case table names) and deletes it in a `finally`, leaving the database empty for the others.
+
+## Acceptance tests
+
+Acceptance and holdout tests use only the public HTTP API.
